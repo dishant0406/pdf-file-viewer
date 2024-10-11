@@ -1,93 +1,41 @@
 "use client"
-import { cn } from "@/lib/utils";
 
-import PDFViewer from "@/components/PDFViewer";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { useRef, useState } from "react";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+
 
 export default function Home() {
-  const [files, setFiles] = useState<{
-    file: File;
-    type: "pdf" | "image";
-  }[]>([]);
-  const [activeFile, setActiveFile] = useState<{
-    file: File;
-    type: "pdf" | "image";
-  } | null>(null);
-  const ref = useRef<HTMLInputElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-
-
+  const [images, setImages] = useState([
+    "https://picsum.photos/id/0/5000/3333",
+    "https://picsum.photos/id/1/5000/3333",
+    "https://picsum.photos/id/2/5000/3333",
+    "https://picsum.photos/id/3/5000/3333",
+    "https://picsum.photos/id/4/5000/3333",
+  ]);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   return (
-   <div className="w-full min-h-[100dvh] flex justify-center items-center">
-    <input  ref={ref} type="file" multiple onChange={(e) => {
-      if (!e.target.files) return;
-      const files = Array.from(e.target.files);
-      const processedFiles = files.map((file) => {
-        return {
-          file,
-          type: (file.type.includes("pdf") ? "pdf" : "image") as "pdf" | "image",
-        };
-      })
-      setFiles(existingFiles => [...existingFiles, ...processedFiles]);
-      setActiveFile({
-        file: files?.[0],
-        type: files?.[0].type.includes("pdf") ? "pdf" : "image",
-      });
-    }} 
-    accept="application/pdf,image/*"
-    className="hidden" />
-   {files.length<1 &&  <Button onClick={()=>{
-      ref.current?.click();
-    }}>
-      Select PDF or Image Files
-    </Button>}
-    {activeFile && activeFile.type === "pdf" && (
-      <PDFViewer pdfSource={activeFile.file} />
-    )}
-    {activeFile && activeFile.type === "image" && (
-      <img 
-      className="max-w-[90vw] max-h-[90vh] object-contain"
-      src={URL.createObjectURL(activeFile.file)} alt={activeFile.file.name} />
-    )}
-    <div className={cn("w-[20vw] z-10 bg-background transition-all duration-200 h-[100vh] fixed top-0  border border-input", {
-      "right-0": isOpen,
-      "right-[-20vw]": !isOpen,
-    })}>
-      <div className="w-fullrelative h-full p-[1rem]">
-        <div onClick={()=>{
-          setIsOpen(!isOpen);
-        }} className={cn("p-[0.5rem] z-[100] transition duration-200 cursor-pointer absolute top-[1rem] left-0 transform  w-fit bg-primary border border-input rounded-md", {
-          "-translate-x-1/2": isOpen,
-          "-translate-x-full rounded-r-none": !isOpen,
+   <div className="w-full select-none min-h-[100dvh] flex justify-center items-center">
+
+    <img
+      src={images[selectedImage]}
+      className="w-full h-full object-contain"
+    />
+   
+   <div className="w-full flex fixed bottom-0 left-0">
+    {
+      images.map((_, index) => (
+        <div
+          onClick={() => setSelectedImage(index)}
+         
+        key={index} className={cn("px-4 py-2 cursor-pointer bg-primary text-secondary border border-input", {
+          "bg-secondary text-primary": selectedImage === index,
         })}>
-          <ChevronLeft size={24} className="text-background" />
+          Image {index}
         </div>
-        <div className="flex overflow-y-auto max-h-[90vh] flex-col gap-4">
-          <Button onClick={()=>{
-            ref.current?.click();
-          }
-          }>
-            Select PDF or Image Files
-          </Button>
-          {
-            files.map((file, index) => {
-              return (
-                <div key={index} onClick={() => {
-                  setActiveFile(file);
-                }} className={cn("p-[1rem] cursor-pointer border border-input rounded-md", {
-                  "bg-primary text-background": activeFile?.file.name === file.file.name,
-                })}>
-                  {file.file.name}
-                </div>
-              );
-            })
-          }
-        </div>
-      </div>
-    </div>
+      ))
+    }
+   </div>
    </div>
   );
 }
