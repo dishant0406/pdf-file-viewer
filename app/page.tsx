@@ -67,13 +67,13 @@ export default function Home() {
       className="w-auto h-full object-contain"
     />
    
-   <div className="h-full flex flex-col fixed top-0 right-0">
+   <div className=" flex fixed bottom-0 left-0">
     {
       images.map((img, index) => (
         <div
           onClick={() => setSelectedImage(index)}
          
-        key={index} className={cn("py-2 text-xs text-center cursor-pointer bg-primary text-secondary border border-input", {
+        key={index} className={cn("py-2 px-2 text-xs h-fit text-center cursor-pointer bg-primary text-secondary border border-input", {
           "bg-secondary text-primary": selectedImage === index,
         })}>
           {img}
