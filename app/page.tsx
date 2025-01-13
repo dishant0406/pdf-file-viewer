@@ -30,7 +30,17 @@ export default function Home() {
     "CAL",
     "FOL",
     "NVP",
-    "IRO",
+    "SURE",
+    "VIT",
+    "DHA",
+    "OVI",
+    "MEF",
+    "VARN",
+    "MYO",
+    "BG",
+    "MYO_PLUS",
+    "ZOLEQ",
+    "SR",
     "END"
   ]);
   const [selectedImage, setSelectedImage] = useState(0);
