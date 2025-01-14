@@ -26,7 +26,6 @@ export default function Home() {
     "MET",
     "GEST",
     "NORM",
-    "LET",
     "CAL",
     "FOL",
     "NVP",
@@ -35,7 +34,7 @@ export default function Home() {
     "DHA",
     "OVI",
     "MEF",
-    "VARN",
+    "D3",
     "MYO",
     "BG",
     "MYO_PLUS",
@@ -77,7 +76,7 @@ export default function Home() {
       className="w-auto h-full object-contain"
     />
    
-   <div className=" flex fixed bottom-0 left-0">
+   <div className="flex fixed w-[100vw] overflow-x-auto bottom-0 left-0">
     {
       images.map((img, index) => (
         <div
